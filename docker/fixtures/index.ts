@@ -17,8 +17,8 @@ import { getConfigOrThrow } from "../../utils/config";
 
 const config = getConfigOrThrow();
 
-export const cosmosDbUri = config.COSMOSDB_URI;
-export const cosmosDbKey = config.COSMOSDB_KEY;
+export const cosmosDbUri = config.COSMOSDB_API_URI;
+export const cosmosDbKey = config.COSMOSDB_API_KEY;
 
 export const cosmosdbClient = new CosmosClient({
   endpoint: cosmosDbUri,
@@ -62,7 +62,7 @@ const aNewProfile = NewProfile.decode({
   throw new Error("Cannot decode new profile.");
 });
 
-createDatabase(config.COSMOSDB_NAME)
+createDatabase(config.COSMOSDB_API_NAME)
   .chain(db =>
     sequenceT(taskEitherSeq)(
       createCollection(db, "message-status", "messageId"),
