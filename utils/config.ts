@@ -25,9 +25,9 @@ export type RedisParams = t.TypeOf<typeof RedisParams>;
 export type IConfig = t.TypeOf<typeof IConfig>;
 export const IConfig = t.intersection([
   t.interface({
-    COSMOSDB_KEY: NonEmptyString,
-    COSMOSDB_NAME: NonEmptyString,
-    COSMOSDB_URI: NonEmptyString,
+    COSMOSDB_API_KEY: NonEmptyString,
+    COSMOSDB_API_NAME: NonEmptyString,
+    COSMOSDB_API_URI: NonEmptyString,
 
     AzureWebJobsStorage: NonEmptyString,
     QueueStorageConnection: NonEmptyString,

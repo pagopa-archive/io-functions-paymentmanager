@@ -10,7 +10,7 @@
       "routePrefix": "api"
     },
     "durableTask": {
-      "hubName": "FunctionsTemplateHub"
+      "hubName": "%SLOT_TASK_HUBNAME%"
     }
   },
   "extensionBundle": {

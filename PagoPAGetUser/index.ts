@@ -46,7 +46,7 @@ const sessionStorage = new SessionStorage(REDIS_CLIENT);
 
 const profileModel = new ProfileModel(
   cosmosdbClient
-    .database(config.COSMOSDB_NAME)
+    .database(config.COSMOSDB_API_NAME)
     .container(PROFILE_COLLECTION_NAME)
 );
 
