@@ -138,7 +138,10 @@ export const checkApplicationHealth = (): HealthCheck<ProblemSource, true> =>
         // tslint:disable readonly-array beacuse the following is actually mutable
         Array<TaskEither<ReadonlyArray<HealthProblem<ProblemSource>>, true>>
       >(
-        checkAzureCosmosDbHealth(config.COSMOSDB_URI, config.COSMOSDB_KEY),
+        checkAzureCosmosDbHealth(
+          config.COSMOSDB_API_URI,
+          config.COSMOSDB_API_KEY
+        ),
         checkAzureStorageHealth(config.QueueStorageConnection)
       )
     )
