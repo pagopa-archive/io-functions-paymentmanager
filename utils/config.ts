@@ -19,7 +19,7 @@ export const IConfig = t.interface({
   AzureWebJobsStorage: NonEmptyString,
   QueueStorageConnection: NonEmptyString,
 
-  isProduction: t.boolean,
+  isProduction: t.boolean
 });
 
 // No need to re-evaluate this object for each call
