@@ -5,26 +5,46 @@
  * The configuration is evaluate eagerly at the first access to the module. The module exposes convenient methods to access such value.
  */
 
+import { fromNullable } from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 
+export const RedisParams = t.intersection([
+  t.interface({
+    REDIS_URL: NonEmptyString
+  }),
+  t.partial({
+    REDIS_PASSWORD: NonEmptyString,
+    REDIS_PORT: NonEmptyString
+  })
+]);
+export type RedisParams = t.TypeOf<typeof RedisParams>;
+
 // global app configuration
 export type IConfig = t.TypeOf<typeof IConfig>;
-export const IConfig = t.interface({
-  COSMOSDB_KEY: NonEmptyString,
-  COSMOSDB_NAME: NonEmptyString,
-  COSMOSDB_URI: NonEmptyString,
+export const IConfig = t.intersection([
+  t.interface({
+    COSMOSDB_KEY: NonEmptyString,
+    COSMOSDB_NAME: NonEmptyString,
+    COSMOSDB_URI: NonEmptyString,
 
-  AzureWebJobsStorage: NonEmptyString,
-  QueueStorageConnection: NonEmptyString,
+    AzureWebJobsStorage: NonEmptyString,
+    QueueStorageConnection: NonEmptyString,
 
-  isProduction: t.boolean
-});
+    ENABLE_NOTICE_EMAIL_CACHE: t.boolean,
+
+    isProduction: t.boolean
+  }),
+  RedisParams
+]);
 
 // No need to re-evaluate this object for each call
 const errorOrConfig: t.Validation<IConfig> = IConfig.decode({
   ...process.env,
+  ENABLE_NOTICE_EMAIL_CACHE: fromNullable(process.env.ENABLE_NOTICE_EMAIL_CACHE)
+    .map(_ => _.toLowerCase() === "true")
+    .getOrElse(false),
   isProduction: process.env.NODE_ENV === "production"
 });
 
