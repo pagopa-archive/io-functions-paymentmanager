@@ -22,7 +22,7 @@ import { HttpCtrl } from "./handler";
 const config = getConfigOrThrow();
 
 const servicesContainer = cosmosdbClient
-  .database(config.COSMOSDB_NAME)
+  .database(config.COSMOSDB_API_NAME)
   .container(SERVICE_COLLECTION_NAME);
 
 const serviceModel = new ServiceModel(servicesContainer);
