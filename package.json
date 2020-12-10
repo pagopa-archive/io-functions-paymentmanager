@@ -9,7 +9,7 @@
     "prebuild": "shx rm -rf dist && yarn generate",
     "build": "tsc",
     "watch": "tsc -w",
-    "extensions:install": "func extensions install",
+    "prestart": "func extensions install --javascript",
     "start": "dotenv -e .env func start --javascript",
     "predev": "npm-run-all generate build",
     "dev": "npm-run-all --parallel start watch",
