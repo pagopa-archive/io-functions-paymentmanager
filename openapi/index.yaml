@@ -22,12 +22,11 @@ paths:
       operationId: PagoPaGetUser
       summary: Get user's data
       description: Returns the user data needed by PagoPA Wallet backend.
-      parameters:
       responses:
         "200":
           description: Found.
           schema:
-            - $ref: "#/definitions/PagoPAUser"
+            $ref: "#/definitions/PagoPAUser"
           examples:
             application/json:
               notice_email: "email@example.com"
