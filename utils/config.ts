@@ -10,13 +10,19 @@ import * as t from "io-ts";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 
-export const RedisParams = t.intersection([
+export const RedisParams = t.union([
   t.interface({
+    isProduction: t.literal(false),
+
     REDIS_URL: NonEmptyString
   }),
-  t.partial({
+  // credentials are mandatory in production
+  t.interface({
+    isProduction: t.literal(true),
+
     REDIS_PASSWORD: NonEmptyString,
-    REDIS_PORT: NonEmptyString
+    REDIS_PORT: NonEmptyString,
+    REDIS_URL: NonEmptyString
   })
 ]);
 export type RedisParams = t.TypeOf<typeof RedisParams>;
