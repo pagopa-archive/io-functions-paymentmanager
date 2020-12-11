@@ -98,7 +98,7 @@ export function PagoPaGetUserHandler(
           () => sessionStorage.getPagoPaNoticeEmail(user),
           _ => new Error("Error reading the notify email cache")
         )
-          .foldTaskEither(_ => fromLeft<Error, EmailString>(_), fromEither)
+          .chain(fromEither)
           .foldTaskEither(
             _ => getProfileAndSaveNoticeEmailCache,
             _ => taskEither.of(some(_))
