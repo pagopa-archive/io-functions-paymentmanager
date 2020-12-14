@@ -7,14 +7,10 @@
   },
   "extensions": {
     "http": {
-      "routePrefix": "api"
+      "routePrefix": ""
     },
     "durableTask": {
       "hubName": "%SLOT_TASK_HUBNAME%"
     }
-  },
-  "extensionBundle": {
-    "id": "Microsoft.Azure.Functions.ExtensionBundle",
-    "version": "[2.*, 3.0.0)"
   }
 }
