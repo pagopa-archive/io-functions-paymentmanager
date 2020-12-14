@@ -27,16 +27,6 @@ services:
       - "traefik.http.routers.functions.entrypoints=web"
       - "traefik.http.services.functions.loadbalancer.server.port=7071"
 
-      - "traefik.http.middlewares.testHeader.headers.customrequestheaders.x-user-id=unused"
-      - "traefik.http.middlewares.testHeader.headers.customrequestheaders.x-user-groups=${REQ_USER_GROUPS}"
-      - "traefik.http.middlewares.testHeader.headers.customrequestheaders.x-subscription-id=${REQ_SERVICE_ID}"
-      - "traefik.http.middlewares.testHeader.headers.customrequestheaders.x-user-email=${SERVICE_EMAIL}"
-      - "traefik.http.middlewares.testHeader.headers.customrequestheaders.x-user-note=unused"
-      - "traefik.http.middlewares.testHeader.headers.customrequestheaders.x-functions-key=unused"
-
-      # apply middleware to route
-      - "traefik.http.routers.functions.middlewares=testHeader"
-
   fnstorage:
     image: azurite
     build:
@@ -61,6 +51,18 @@ services:
     networks:
       - io-fn
 
+  redis:
+    container_name: redis-fn-pm
+    image: wodby/redis:3.2-2.1.5
+    ports:
+      - "6379:6379"
+    environment:
+      REDIS_TIMEOUT: 300
+      REDIS_TCP_KEEPALIVE: 60
+      REDIS_MAXMEMORY: 182m
+    networks:
+      - io-fn
+
   cosmosdb:
     image: cosmosdb
     env_file:
@@ -70,6 +72,18 @@ services:
       dockerfile: docker/cosmosdb/Dockerfile
     ports:
       - ${COSMOSDB_PORT}:3000
+    networks:
+      - io-fn
+
+  fixtures:
+    image: fixtures-fn-pm
+    env_file:
+      - .env
+    build:
+      context: ./
+      dockerfile: docker/fixtures/Dockerfile
+    depends_on:
+      - cosmosdb
     networks:
       - io-fn
 

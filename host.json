@@ -7,7 +7,7 @@
   },
   "extensions": {
     "http": {
-      "routePrefix": ""
+      "routePrefix": "api"
     },
     "durableTask": {
       "hubName": "%SLOT_TASK_HUBNAME%"

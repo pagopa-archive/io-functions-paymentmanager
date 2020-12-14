@@ -1,49 +1,92 @@
 swagger: "2.0"
 info:
   version: 1.1.0
-  title: IO Function API
+  title: IO Function PaymentManager
   contact:
     name: IO team
     url: https://forum.italia.it/c/progetto-io
   x-logo:
     url: https://io.italia.it/assets/img/io-logo-blue.svg
   description: >
-    Documentation of the IO Function API here.
+    Documentation of the IO Function PaymentManager here.
 host: api.cd.italia.it
-basePath: "/template"
+basePath: "/api"
 schemes:
   - https
+security:
+  - Token: []
 paths:
-  "/echo/{input}":
-    parameters:
-      - name: input
-        in: path
-        type: string
-        required: true
-        description: test input.
+  "/v1/user":
+    x-swagger-router-controller: PagoPaGetUser
     get:
-      operationId: echo
-      summary: Echo API
-      description: Some API description here.
+      operationId: PagoPaGetUser
+      summary: Get user's data
+      description: Returns the user data needed by PagoPA Wallet backend.
       responses:
         "200":
           description: Found.
           schema:
-            "$ref": "#/definitions/Input"
+            $ref: "#/definitions/PagoPAUser"
           examples:
             application/json:
-              id: "10000AAAA"
-              output: "hello world !"
+              notice_email: "email@example.com"
+              spid_email: "email@example.com"
+              name: "Name"
+              family_name: "Surname"
+              mobile_phone: "+393331234567"
+        "400":
+          description: Bad request.
+          schema:
+            $ref: "#/definitions/ProblemJson"
         "401":
-          description: Unauthorized
+          description: Token null or invalid.
         "404":
-          description: Not found.
-      parameters: []
+          description: User Profile not found
+          schema:
+            $ref: "#/definitions/ProblemJson"
+        "429":
+          description: Too many requests
+          schema:
+            $ref: "#/definitions/ProblemJson"
+        "500":
+          description: There was an error in retrieving the user data.
+          schema:
+            $ref: "#/definitions/ProblemJson"
 definitions:
-  Input:
-    type: object
-    properties:
-      id:
-        type: string
-      output:
-        type: string
+  EmailAddress:
+    $ref: "https://raw.githubusercontent.com/pagopa/io-functions-commons/v5.0.0/openapi/definitions.yaml#/EmailAddress"
+  ProblemJson:
+    $ref: "https://raw.githubusercontent.com/pagopa/io-functions-commons/v5.0.0/openapi/definitions.yaml#/ProblemJson"
+  FiscalCode:
+    $ref: "https://raw.githubusercontent.com/pagopa/io-functions-commons/v5.0.0/openapi/definitions.yaml#/FiscalCode"
+  LimitedFederatedUser:
+    $ref: "https://raw.githubusercontent.com/pagopa/io-backend/master/api_backend.yaml#/definitions/LimitedFederatedUser"
+  FederatedUser:
+    $ref: "https://raw.githubusercontent.com/pagopa/io-backend/master/api_backend.yaml#/definitions/FederatedUser"
+  PagoPAUser:
+    title: PagoPA user
+    description: User data needed by PagaPA proxy.
+    allOf:
+      - $ref: "#/definitions/FederatedUser"
+      - type: object
+        properties:
+          spid_email:
+            $ref: '#/definitions/EmailAddress'
+          notice_email:
+            $ref: '#/definitions/EmailAddress'
+          mobile_phone:
+            type: string
+            minLength: 1
+        required:
+          - notice_email
+responses: {}
+parameters: {}
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  Token:
+    type: apiKey
+    name: token
+    in: query
