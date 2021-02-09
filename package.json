@@ -1,8 +1,8 @@
 {
-  "name": "@pagopa/io-functions-template",
+  "name": "@pagopa/io-functions-paymentmanager",
   "description": "",
   "author": "IO team",
-  "repository": "https://github.com/pagoPA/io-functions-template",
+  "repository": "https://github.com/pagoPA/io-functions-paymentmanager",
   "version": "1.1.8",
   "license": "MIT",
   "scripts": {
