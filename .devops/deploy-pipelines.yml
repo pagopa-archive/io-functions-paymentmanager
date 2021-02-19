@@ -37,7 +37,7 @@ resources:
     - repository: pagopaCommons
       type: github
       name: pagopa/azure-pipeline-templates
-      ref: refs/tags/v11
+      ref: refs/tags/v12
       endpoint: 'pagopa'
 
 stages:
@@ -190,3 +190,4 @@ stages:
         - template: templates/client-sdk-publish/template.yaml@pagopaCommons
           parameters:
             openapiSpecPath: 'openapi/index.yaml'
+            generatorPackageName: italia-utils           
