@@ -594,6 +594,20 @@
     "@octokit/openapi-types" "^1.2.0"
     "@types/node" ">= 8"
 
+"@pagopa/ts-commons@^9.4.1":
+  version "9.4.1"
+  resolved "https://registry.yarnpkg.com/@pagopa/ts-commons/-/ts-commons-9.4.1.tgz#cc2c1c08c84fb6fa55a99c506227b8c2dcc69c01"
+  integrity sha512-wA/eInP9l0vPovR4+50vpVxHdUr/el0xUrJ0LoRJv6qAErS9NzGIDwyg4ZjW6SHxDGzN4PpIFSb0QFki27wswg==
+  dependencies:
+    abort-controller "^3.0.0"
+    agentkeepalive "^4.1.2"
+    applicationinsights "^1.7.4"
+    fp-ts "1.17.4"
+    io-ts "1.8.5"
+    json-set-map "^1.0.2"
+    node-fetch "^2.6.0"
+    validator "^10.1.0"
+
 "@sendgrid/client@^6.5.5":
   version "6.5.5"
   resolved "https://registry.yarnpkg.com/@sendgrid/client/-/client-6.5.5.tgz#66cf569445d98a795998a894bb432a9939ead7c3"

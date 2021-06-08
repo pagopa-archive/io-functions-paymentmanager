@@ -52,6 +52,7 @@
   },
   "dependencies": {
     "@azure/cosmos": "^3.7.2",
+    "@pagopa/ts-commons": "^9.4.1",
     "durable-functions": "^1.4.4",
     "express": "^4.15.3",
     "fp-ts": "1.17.4",
